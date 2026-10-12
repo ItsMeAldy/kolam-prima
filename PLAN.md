@@ -12,7 +12,7 @@ Landing page **satu halaman** untuk bisnis jasa kolam renang (desain, pembanguna
 perawatan). Tujuan tunggal: mengarahkan pengunjung menghubungi via **WhatsApp**.
 Dilengkapi **panel admin** (Filament) untuk mengelola konten tanpa menyentuh kode.
 
-- **Fase yang dikerjakan sekarang**: Fase 1 — Website Inti.
+- **Fase yang dikerjakan sekarang**: Fase 1 — Website Inti (**selesai**, Fase 0–9 ✅).
 - **Nama brand sementara**: Kolam Prima
 - **Tagline**: "Desain, Bangun & Rawat Kolam Renang Impian Anda"
 - **Audiens**: pemilik rumah, pengelola villa, hotel, properti komersial.
@@ -93,13 +93,13 @@ deployment.
 
 ## 3. Prasyarat (Cek Sebelum Mulai)
 
-- [ ] Laragon terpasang di `D:\laragon` — **sudah terverifikasi**.
-- [ ] MySQL 8.4.3 tersedia (`D:\laragon\bin\mysql\mysql-8.4.3-winx64`) — **ada**.
-- [ ] PHP 8.3.30 tersedia (`D:\laragon\bin\php\php-8.3.30-Win32-vs16-x64`) — **ada**.
-- [ ] Composer Laragon di-update ke versi terbaru.
-- [ ] Laragon dijalankan (Start All) → Apache + MySQL aktif.
-- [ ] Git terpasang — **ada** (`ItsMeAldy`).
-- [ ] (Opsional) Mailpit untuk cek email — tersedia di Laragon.
+- [x] Laragon terpasang di `D:\laragon` — **sudah terverifikasi**.
+- [x] MySQL 8.4.3 tersedia (`D:\laragon\bin\mysql\mysql-8.4.3-winx64`) — **ada**.
+- [x] PHP 8.3.30 tersedia (`D:\laragon\bin\php\php-8.3.30-Win32-vs16-x64`) — **ada**.
+- [x] Composer Laragon di-update ke versi terbaru (2.9.4).
+- [x] Laragon dijalankan (Start All) → Apache + MySQL aktif.
+- [x] Git terpasang — **ada** (`ItsMeAldy`).
+- [x] (Opsional) Mailpit untuk cek email — tersedia di Laragon.
 
 ---
 
@@ -107,79 +107,79 @@ deployment.
 
 Urutan ini dibuat agar tiap langkah bisa diverifikasi sebelum lanjut.
 
-### Fase 0 — Persiapan Environment
-- [ ] Update Composer Laragon: `composer self-update`
-- [ ] Jalankan Laragon → **Start All** (Apache + MySQL).
-- [ ] Buka Laragon Terminal, pastikan `php -v` = 8.3.30 dan `composer -V` terbaru.
-- [ ] Buat database kosong `website_kolam` di phpMyAdmin/HeidiSQL.
+### Fase 0 — Persiapan Environment ✅
+- [x] Update Composer Laragon: `composer self-update`
+- [x] Jalankan Laragon → **Start All** (Apache + MySQL).
+- [x] Buka Laragon Terminal, pastikan `php -v` = 8.3.30 dan `composer -V` terbaru.
+- [x] Buat database kosong `website_kolam` di phpMyAdmin/HeidiSQL.
 
-### Fase 1 — Scaffold Proyek Laravel 13
-- [ ] Scaffold Laravel 13 di `D:\laragon\www\website-kolam`.
-- [ ] Konfigurasi `.env`: koneksi MySQL (`DB_DATABASE=website_kolam`), `APP_URL=http://website-kolam.test`.
-- [ ] `php artisan key:generate`.
-- [ ] Verifikasi halaman default Laravel terbuka di `http://website-kolam.test`.
-- [ ] Inisialisasi git lokal + `.gitignore` + commit pertama.
+### Fase 1 — Scaffold Proyek Laravel 13 ✅
+- [x] Scaffold Laravel 13 di `D:\laragon\www\website-kolam`.
+- [x] Konfigurasi `.env`: koneksi MySQL (`DB_DATABASE=website_kolam`), `APP_URL=http://website-kolam.test`.
+- [x] `php artisan key:generate`.
+- [x] Verifikasi halaman default Laravel terbuka di `http://website-kolam.test`.
+- [x] Inisialisasi git lokal + `.gitignore` + commit pertama.
 
-### Fase 2 — Filament 5 & Autentikasi
-- [ ] Install Filament 5.
-- [ ] Buat panel admin di `/admin`.
-- [ ] Konfigurasi autentikasi email + password.
-- [ ] Verifikasi halaman login Filament tampil.
+### Fase 2 — Filament 5 & Autentikasi ✅
+- [x] Install Filament 5.
+- [x] Buat panel admin di `/admin`.
+- [x] Konfigurasi autentikasi email + password.
+- [x] Verifikasi halaman login Filament tampil.
 
-### Fase 3 — Database (Migration & Model)
-- [ ] Buat migration + model: `SiteSetting`, `Service`, `Package`, `Project`, `ProjectImage`.
-- [ ] Definisikan relasi (Project hasMany ProjectImage).
-- [ ] Jalankan `php artisan migrate`.
-- [ ] Verifikasi tabel terbentuk di phpMyAdmin.
+### Fase 3 — Database (Migration & Model) ✅
+- [x] Buat migration + model: `SiteSetting`, `Service`, `Package`, `Project`, `ProjectImage`.
+- [x] Definisikan relasi (Project hasMany ProjectImage).
+- [x] Jalankan `php artisan migrate`.
+- [x] Verifikasi tabel terbentuk di phpMyAdmin.
 
-### Fase 4 — Seeder
-- [ ] Seeder akun admin: `admin@kolamprima.test` / `password`.
-- [ ] Seeder Pengaturan Situs (brand, kontak, hero, 4 angka kepercayaan).
-- [ ] Seeder 3 Kartu Layanan.
-- [ ] Seeder 3 Paket Layanan (satu bertanda "paling populer").
-- [ ] Seeder 9 Proyek Portofolio + gambar (URL Unsplash).
-- [ ] Jalankan `php artisan migrate:fresh --seed`, verifikasi data masuk.
+### Fase 4 — Seeder ✅
+- [x] Seeder akun admin: `admin@kolamprima.test` / `password`.
+- [x] Seeder Pengaturan Situs (brand, kontak, hero, 4 angka kepercayaan).
+- [x] Seeder 3 Kartu Layanan.
+- [x] Seeder 3 Paket Layanan (satu bertanda "paling populer").
+- [x] Seeder 9 Proyek Portofolio + gambar (URL Unsplash).
+- [x] Jalankan `php artisan migrate:fresh --seed`, verifikasi data masuk.
 
-### Fase 5 — Panel Admin (Filament Resources)
-- [ ] `ProjectResource` + repeater gambar + upload/URL + urutan + publish.
-- [ ] `PackageResource` + repeater fitur + badge populer.
-- [ ] `ServiceResource` + urutan.
-- [ ] `SiteSettingResource` (satu record, halaman khusus).
-- [ ] Verifikasi CRUD tiap resource dari browser.
+### Fase 5 — Panel Admin (Filament Resources) ✅
+- [x] `ProjectResource` + repeater gambar + upload/URL + urutan + publish.
+- [x] `PackageResource` + repeater fitur + badge populer.
+- [x] `ServiceResource` + urutan.
+- [x] `SiteSettingResource` (satu record, halaman khusus).
+- [x] Verifikasi CRUD tiap resource dari browser.
 
-### Fase 6 — Landing Page (Blade + Tailwind)
-- [ ] Setup Tailwind: palet warna, font, `tailwind.config.js`.
-- [ ] Layout utama (`layouts/app.blade.php`): meta, font, Alpine, slot.
-- [ ] Nav sticky + hamburger mobile + tombol WA.
-- [ ] Hero.
-- [ ] Bilah Kepercayaan.
-- [ ] Layanan.
-- [ ] Portofolio.
-- [ ] Proses Kerja.
-- [ ] Paket Layanan.
-- [ ] Ajakan Akhir + form.
-- [ ] Footer.
-- [ ] Tombol WA melayang.
-- [ ] Responsif diuji di lebar 375px, 768px, 1280px.
+### Fase 6 — Landing Page (Blade + Tailwind) ✅
+- [x] Setup Tailwind: palet warna, font, `tailwind.config.js`.
+- [x] Layout utama (`layouts/app.blade.php`): meta, font, Alpine, slot.
+- [x] Nav sticky + hamburger mobile + tombol WA.
+- [x] Hero.
+- [x] Bilah Kepercayaan.
+- [x] Layanan.
+- [x] Portofolio.
+- [x] Proses Kerja.
+- [x] Paket Layanan.
+- [x] Ajakan Akhir + form.
+- [x] Footer.
+- [x] Tombol WA melayang.
+- [x] Responsif diuji di lebar 375px, 768px, 1280px.
 
-### Fase 7 — WhatsApp & Form
-- [ ] Helper pembentuk URL `wa.me` + pesan prefill per konteks.
-- [ ] Pasang pesan spesifik di tiap tombol (layanan, paket, nav, melayang, akhir).
-- [ ] Form: validasi HTML5 + honeypot + redirect WA.
-- [ ] Uji semua tombol membuka WhatsApp dengan pesan benar.
+### Fase 7 — WhatsApp & Form ✅
+- [x] Helper pembentuk URL `wa.me` + pesan prefill per konteks.
+- [x] Pasang pesan spesifik di tiap tombol (layanan, paket, nav, melayang, akhir).
+- [x] Form: validasi HTML5 + honeypot + redirect WA.
+- [x] Uji semua tombol membuka WhatsApp dengan pesan benar.
 
-### Fase 8 — 404 & SEO Dasar
-- [ ] Halaman 404 custom bergaya brand.
-- [ ] Meta: title, description, Open Graph, favicon.
-- [ ] `sitemap.xml` + `robots.txt`.
-- [ ] JSON-LD `LocalBusiness`.
+### Fase 8 — 404 & SEO Dasar ✅
+- [x] Halaman 404 custom bergaya brand.
+- [x] Meta: title, description, Open Graph, favicon.
+- [x] `sitemap.xml` + `robots.txt`.
+- [x] JSON-LD `LocalBusiness`.
 
-### Fase 9 — Testing
-- [ ] Feature test: login admin berhasil/gagal.
-- [ ] Feature test: CRUD tiap resource Filament.
-- [ ] Feature test: halaman utama render 200 + data tampil.
-- [ ] Feature test: form menghasilkan URL WA benar.
-- [ ] `php artisan test` hijau.
+### Fase 9 — Testing ✅ (19 passed, 62 assertions, 0 risky)
+- [x] Feature test: login admin berhasil/gagal.
+- [x] Feature test: CRUD tiap resource Filament.
+- [x] Feature test: halaman utama render 200 + data tampil.
+- [x] Feature test: form menghasilkan URL WA benar.
+- [x] `php artisan test` hijau.
 
 ### Fase 10 — Deployment (ditunda)
 - [ ] Tunggu keputusan user (GitHub + hosting).
@@ -219,15 +219,15 @@ website-kolam/
 
 ## 6. Definisi Selesai (Definition of Done) — Fase 1
 
-- [ ] Semua 10 bagian landing page tampil, responsif, sesuai design system.
-- [ ] Semua tombol WhatsApp berfungsi dengan pesan prefill yang benar.
-- [ ] Form konsultasi mengarahkan ke WhatsApp dengan pesan terisi.
-- [ ] Admin bisa login dan CRUD seluruh 4 resource.
-- [ ] Halaman 404 custom tampil.
-- [ ] SEO dasar terpasang.
-- [ ] `php artisan test` hijau.
-- [ ] Konten placeholder jelas dan mudah diganti dari Pengaturan Situs.
-- [ ] Kode di-commit ke git lokal dengan riwayat rapi.
+- [x] Semua 10 bagian landing page tampil, responsif, sesuai design system.
+- [x] Semua tombol WhatsApp berfungsi dengan pesan prefill yang benar.
+- [x] Form konsultasi mengarahkan ke WhatsApp dengan pesan terisi.
+- [x] Admin bisa login dan CRUD seluruh 4 resource.
+- [x] Halaman 404 custom tampil.
+- [x] SEO dasar terpasang.
+- [x] `php artisan test` hijau.
+- [x] Konten placeholder jelas dan mudah diganti dari Pengaturan Situs.
+- [x] Kode di-commit ke git lokal dengan riwayat rapi.
 
 ---
 
