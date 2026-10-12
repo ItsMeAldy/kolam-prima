@@ -21,6 +21,26 @@
 
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 
+    {{-- Structured data: LocalBusiness --}}
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'LocalBusiness',
+        'name' => $settings->brand_name,
+        'description' => $settings->tagline,
+        'url' => url('/'),
+        'telephone' => $settings->whatsapp_number ? '+' . preg_replace('/\D+/', '', $settings->whatsapp_number) : null,
+        'email' => $settings->email,
+        'address' => $settings->address ? [
+            '@type' => 'PostalAddress',
+            'streetAddress' => $settings->address,
+            'addressCountry' => 'ID',
+        ] : null,
+        'image' => asset('favicon.svg'),
+        'priceRange' => '$$',
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
