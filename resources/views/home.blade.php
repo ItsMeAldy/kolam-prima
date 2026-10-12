@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $settings->brand_name . ' — ' . $settings->tagline)
-@section('description', $settings->hero_subheadline)
+@section('description', $settings->hero_subheadline ?? $settings->tagline ?? '')
 
 @section('content')
     @include('sections.nav')

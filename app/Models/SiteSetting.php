@@ -34,6 +34,8 @@ class SiteSetting extends Model
         return static::query()->firstOrCreate([], [
             'brand_name' => 'Kolam Prima',
             'tagline' => 'Desain, Bangun & Rawat Kolam Renang Impian Anda',
+            'hero_headline' => 'Wujudkan Kolam Renang Impian Anda',
+            'hero_subheadline' => 'Layanan lengkap mulai dari desain, pembangunan, hingga perawatan berkala untuk rumah, villa, dan hotel.',
         ]);
     }
 
