@@ -17,6 +17,10 @@ Status awal: Fase 0–9 hampir selesai; 1 bug (output buffer) + commit tertunda.
 
 ## C. Ditunda (tunggu instruksi user)
 - [ ] C1. Fase 10 — Deployment.
-- [ ] C2. Hubungkan GitHub + push repo.
+- [x] C2. Hubungkan GitHub + push repo → https://github.com/ItsMeAldy/kolam-prima (public, branch `main`).
 - [ ] C3. Opsional: Laravel Boost, Umami analytics, konten asli (nomor WA, alamat, foto).
 - [ ] C4. Fase 2/3 lanjutan: blog, testimoni, FAQ, halaman layanan terpisah.
+
+## D. Verifikasi manual (dilakukan user)
+- [x] D1. Jalankan MySQL + `artisan serve`, cek landing page + panel admin di browser.
+- [ ] D2. Isi temuan/feedback hasil pengecekan manual (jika ada).
