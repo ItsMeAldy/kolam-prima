@@ -2,10 +2,11 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -60,11 +61,14 @@ class ProjectForm
                             ->label('Gambar')
                             ->relationship()
                             ->schema([
-                                TextInput::make('image_url')
-                                    ->label('URL Gambar')
-                                    ->required()
-                                    ->url()
-                                    ->maxLength(2048),
+                                FileUpload::make('path')
+                                    ->label('Gambar')
+                                    ->image()
+                                    ->disk('public')
+                                    ->directory('media/projects')
+                                    ->visibility('public')
+                                    ->maxSize(5120)
+                                    ->columnSpanFull(),
                                 TextInput::make('sort_order')
                                     ->label('Urutan')
                                     ->numeric()

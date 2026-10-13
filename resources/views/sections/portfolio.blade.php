@@ -10,7 +10,7 @@
             @forelse ($projects as $project)
                 <article class="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/5">
                     <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="{{ $project->images->first()?->image_url ?? 'https://picsum.photos/seed/kolam-' . $project->id . '/1200/800' }}"
+                        <img src="{{ $project->coverUrl() }}"
                              alt="{{ $project->title }}"
                              loading="lazy"
                              class="h-full w-full object-cover transition duration-500 group-hover:scale-105">

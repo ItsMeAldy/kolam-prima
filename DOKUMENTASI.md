@@ -97,6 +97,8 @@ filter, autentikasi) sehingga fokus bisa diarahkan ke landing page.
 | tiktok_url | string nullable | |
 | hero_headline | string | judul hero |
 | hero_subheadline | text | subjudul hero |
+| hero_image | string nullable | path foto hero di disk `public` (upload) |
+| logo_path | string nullable | path logo brand di disk `public` (upload) |
 | stat_1_label | string | mis. "Proyek Selesai" |
 | stat_1_value | string | mis. "150+" |
 | stat_2_label | string | mis. "Tahun Pengalaman" |
@@ -115,7 +117,8 @@ filter, autentikasi) sehingga fokus bisa diarahkan ke landing page.
 | id | bigint PK | |
 | title | string | "Desain & Gambar" |
 | description | text | penjelasan singkat |
-| icon | string nullable | nama ikon atau URL gambar |
+| icon | string nullable | nama ikon bawaan (fallback bila tak ada gambar) |
+| image_path | string nullable | path gambar ikon di disk `public` (upload) |
 | wa_message | string nullable | pesan prefill khusus kartu ini |
 | sort_order | integer | urutan tampil |
 | timestamps | | |
@@ -150,14 +153,35 @@ filter, autentikasi) sehingga fokus bisa diarahkan ke landing page.
 |---|---|---|
 | id | bigint PK | |
 | project_id | bigint FK → projects | cascade delete |
-| image_url | string | URL gambar (Unsplash/dll) |
+| image_url | string nullable | URL gambar eksternal (fallback lama) |
+| path | string nullable | path berkas di disk `public` (upload) |
 | sort_order | integer | |
 | timestamps | | |
 
 **Relasi:** `Project hasMany ProjectImage`; `ProjectImage belongsTo Project`.
+Accessor `ProjectImage::url` mengutamakan `path` (berkas upload), jatuh ke `image_url`.
 
-> Upload file **tidak** dipakai di Fase 1 — gambar memakai URL eksternal.
-> Struktur ini siap ditingkatkan ke upload storage di Fase 2.
+### 4.7 `videos` (galeri video)
+| Kolom | Tipe | Catatan |
+|---|---|---|
+| id | bigint PK | |
+| title | string | judul video |
+| video_path | string | path berkas MP4 di disk `public` |
+| thumbnail_path | string nullable | path poster (dibuat dari frame video) |
+| sort_order | integer | |
+| is_published | boolean | tampil/tidak |
+| timestamps | | |
+
+Accessor `Video::url` dan `Video::thumbnail_url` menghasilkan URL publik.
+
+> **Upload file aktif (Fase 2):** gambar & video diunggah ke disk `public`
+> (`storage/app/public/media/...`), diakses via `public/storage` (symlink
+> `php artisan storage:link`). Berkas media bersifat runtime — di-ignore git.
+> Bila `storage:link` belum dibuat, gambar tidak tampil di web.
+>
+> Jenis unggahan yang didukung: gambar proyek (`media/projects`), berkas video
+> (`media/videos`) + poster (`media/thumbs`), foto hero (`media/hero`), logo
+> brand (`media/branding`), dan gambar kartu layanan (`media/services`).
 
 ---
 
@@ -251,7 +275,8 @@ Skala usulan: `text-sm` 14, `base` 16, `lg` 18, `xl` 20, `2xl` 24, `3xl` 30,
 - Subjudul dari `hero_subheadline`.
 - Dua tombol: **Konsultasi Gratis (WA)** + **Lihat Portofolio** (`#portofolio`).
 - Poin kepercayaan singkat (garansi, area layanan).
-- Satu gambar besar kolam renang.
+- Satu gambar besar kolam renang: dari `hero_image` (upload) bila ada, jika tidak
+  jatuh ke foto proyek terbaru.
 
 ### 8.3 Bilah Kepercayaan
 - Empat angka dari `stat_1..stat_4` (label + nilai).
@@ -263,11 +288,17 @@ Skala usulan: `text-sm` 14, `base` 16, `lg` 18, `xl` 20, `2xl` 24, `3xl` 30,
 
 ### 8.5 Portofolio
 - Grid dari `projects` (hanya `is_published`), urut `sort_order`.
-- Tiap item: gambar utama (dari `project_images` pertama), judul, lokasi,
-  badge jenis properti.
-- Target: 9 proyek (grid 3×3 desktop, 1 kolom mobile).
+- Tiap item: gambar utama (dari `project_images` pertama via `coverUrl()`),
+  judul, lokasi, badge jenis properti.
+- Gambar dari berkas upload (disk `public`) atau URL eksternal (fallback).
 
-### 8.6 Proses Kerja (hardcode di Blade)
+### 8.6 Galeri Video
+- Grid dari `videos` (hanya `is_published`), urut `sort_order`.
+- Tiap kartu: poster (`thumbnail_path`) rasio 9:16 + tombol play.
+- Klik kartu membuka modal pemutar video (Alpine.js), tekan Esc untuk tutup.
+- Section hanya dirender bila ada video.
+
+### 8.7 Proses Kerja (hardcode di Blade)
 6 langkah berurutan:
 1. Konsultasi awal
 2. Survei lokasi
@@ -278,25 +309,25 @@ Skala usulan: `text-sm` 14, `base` 16, `lg` 18, `xl` 20, `2xl` 24, `3xl` 30,
 
 Tampil sebagai timeline vertikal (mobile) / horizontal (desktop).
 
-### 8.7 Paket Layanan
+### 8.8 Paket Layanan
 - Tiga kartu dari `packages`.
 - Tiap kartu: nama, tagline, daftar fitur, harga atau "Hubungi kami",
   tombol "Tanya Harga via WA".
 - Paket `is_popular` diberi badge **"Paling Populer"** + highlight.
 
-### 8.8 Ajakan Akhir + Form
+### 8.9 Ajakan Akhir + Form
 - Tombol WhatsApp besar.
 - Form: **nama, nomor telepon, jenis kebutuhan, pesan**.
 - Submit → susun pesan → buka `wa.me` (prefilled). Tanpa simpan DB.
 - Validasi HTML5 + honeypot sederhana.
 
-### 8.9 Footer
+### 8.10 Footer
 - Brand + tagline.
 - Daftar layanan (tautan anchor).
 - Kontak: WhatsApp, email, alamat.
 - Sosmed: Instagram, TikTok.
 
-### 8.10 Tombol WhatsApp Melayang
+### 8.11 Tombol WhatsApp Melayang
 - Tetap di sudut kanan bawah, semua bagian.
 - Pesan prefill umum.
 
@@ -353,10 +384,11 @@ URL siap pakai. Semua tombol memanggil helper ini agar konsisten.
 
 | Resource | Field utama | Aksi |
 |---|---|---|
-| **Proyek** | judul, slug, lokasi, jenis properti, deskripsi, gambar (repeater), urutan, publish | CRUD + atur urutan |
+| **Proyek** | judul, slug, lokasi, jenis properti, deskripsi, gambar (repeater upload), urutan, publish | CRUD + atur urutan |
 | **Paket** | nama, tagline, fitur (repeater), harga, populer, urutan | CRUD |
-| **Layanan** | judul, deskripsi, ikon, pesan WA, urutan | CRUD |
-| **Pengaturan Situs** | brand, tagline, WA, email, alamat, IG, TikTok, hero, 4 angka | Halaman edit tunggal |
+| **Layanan** | judul, deskripsi, ikon (gambar upload / nama Heroicon), pesan WA, urutan | CRUD |
+| **Galeri Video** | judul, berkas video (MP4), poster, urutan, publish | CRUD |
+| **Pengaturan Situs** | brand, logo (upload), tagline, WA, email, alamat, IG, TikTok, hero (teks + foto upload), 4 angka | Halaman edit tunggal |
 
 - Autentikasi: email + password (Filament panel).
 - Akun awal: `admin@kolamprima.test` / `password` (dibuat via seeder; segera ganti).
@@ -452,7 +484,7 @@ Hasil riset free tier (Okt 2026):
 | 8 | Proses Kerja | Hardcode |
 | 9 | Bilah Kepercayaan | Editable (Pengaturan Situs) |
 | 10 | Form | Redirect WhatsApp, tanpa simpan |
-| 11 | Upload gambar | URL eksternal |
+| 11 | Upload gambar | Upload berkas ke disk `public` (proyek, video, hero, logo, ikon layanan) |
 | 12 | Analytics | Ditunda |
 | 13 | SEO dasar | Ya |
 | 14 | Testing | Ya (PHPUnit) |

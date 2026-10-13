@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 #[Fillable([
     'brand_name',
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
     'tiktok_url',
     'hero_headline',
     'hero_subheadline',
+    'hero_image',
+    'logo_path',
     'stat_1_label',
     'stat_1_value',
     'stat_2_label',
@@ -37,6 +40,26 @@ class SiteSetting extends Model
             'hero_headline' => 'Wujudkan Kolam Renang Impian Anda',
             'hero_subheadline' => 'Layanan lengkap mulai dari desain, pembangunan, hingga perawatan berkala untuk rumah, villa, dan hotel.',
         ]);
+    }
+
+    /**
+     * URL publik foto hero. Null bila belum diunggah.
+     */
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        return $this->hero_image
+            ? Storage::disk('public')->url($this->hero_image)
+            : null;
+    }
+
+    /**
+     * URL publik logo brand. Null bila belum diunggah.
+     */
+    public function getLogoUrlAttribute(): ?string
+    {
+        return $this->logo_path
+            ? Storage::disk('public')->url($this->logo_path)
+            : null;
     }
 
     /**

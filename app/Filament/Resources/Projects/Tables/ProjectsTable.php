@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Projects\Tables;
 
+use App\Models\Project;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -18,10 +19,12 @@ class ProjectsTable
         return $table
             ->defaultSort('sort_order')
             ->columns([
-                ImageColumn::make('images.0.image_url')
+                ImageColumn::make('cover')
                     ->label('Gambar')
+                    ->disk('public')
                     ->height(48)
-                    ->width(64),
+                    ->width(64)
+                    ->getStateUsing(fn (Project $record): ?string => $record->images->first()?->path),
                 TextColumn::make('title')
                     ->label('Nama Proyek')
                     ->searchable()
@@ -45,7 +48,7 @@ class ProjectsTable
                         default => 'gray',
                     }),
                 TextColumn::make('images_count')
-                    ->label('Gambar')
+                    ->label('Jumlah Gambar')
                     ->counts('images')
                     ->alignCenter(),
                 TextColumn::make('sort_order')

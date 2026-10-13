@@ -9,6 +9,7 @@
     @include('sections.trust')
     @include('sections.services')
     @include('sections.portfolio')
+    @include('sections.videos')
     @include('sections.process')
     @include('sections.packages')
     @include('sections.cta')

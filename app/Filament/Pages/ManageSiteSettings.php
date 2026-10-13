@@ -5,8 +5,9 @@ namespace App\Filament\Pages;
 use App\Models\SiteSetting;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
@@ -62,6 +63,15 @@ class ManageSiteSettings extends Page
                         TextInput::make('tagline')
                             ->label('Tagline')
                             ->maxLength(255),
+                        FileUpload::make('logo_path')
+                            ->label('Logo Brand')
+                            ->helperText('Kosongkan untuk memakai ikon bawaan. Format PNG transparan disarankan.')
+                            ->image()
+                            ->disk('public')
+                            ->directory('media/branding')
+                            ->visibility('public')
+                            ->maxSize(2048)
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
 
@@ -104,6 +114,15 @@ class ManageSiteSettings extends Page
                         Textarea::make('hero_subheadline')
                             ->label('Subjudul')
                             ->rows(2)
+                            ->columnSpanFull(),
+                        FileUpload::make('hero_image')
+                            ->label('Foto Hero')
+                            ->helperText('Kosongkan untuk memakai foto proyek terbaru sebagai gambar hero.')
+                            ->image()
+                            ->disk('public')
+                            ->directory('media/hero')
+                            ->visibility('public')
+                            ->maxSize(5120)
                             ->columnSpanFull(),
                     ]),
 
