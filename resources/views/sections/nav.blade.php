@@ -7,11 +7,7 @@
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {{-- Brand --}}
         <a href="#beranda" class="flex items-center gap-2">
-            <span class="grid h-9 w-9 place-items-center rounded-xl bg-primary-600 text-white">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 15c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0M2 9c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" />
-                </svg>
-            </span>
+            <x-brand-logo :settings="$settings" />
             <span class="font-heading text-lg font-bold tracking-tight">{{ $settings->brand_name }}</span>
         </a>
 
@@ -20,6 +16,7 @@
             @foreach ([
                 ['#layanan', 'Layanan'],
                 ['#portofolio', 'Portofolio'],
+                ['#video', 'Video'],
                 ['#proses', 'Proses Kerja'],
                 ['#paket', 'Paket'],
                 ['#kontak', 'Kontak'],
@@ -52,6 +49,7 @@
             @foreach ([
                 ['#layanan', 'Layanan'],
                 ['#portofolio', 'Portofolio'],
+                ['#video', 'Video'],
                 ['#proses', 'Proses Kerja'],
                 ['#paket', 'Paket'],
                 ['#kontak', 'Kontak'],

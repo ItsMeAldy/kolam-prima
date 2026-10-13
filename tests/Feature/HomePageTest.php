@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Package;
 use App\Models\Project;
-use App\Models\ProjectImage;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -73,6 +73,49 @@ class HomePageTest extends TestCase
         $this->get('/')->assertSuccessful()
             ->assertSee('Proyek Tampil')
             ->assertDontSee('Proyek Tersembunyi');
+    }
+
+    public function test_landing_page_shows_published_videos_only(): void
+    {
+        Video::create([
+            'title' => 'Video Tampil',
+            'video_path' => 'media/videos/tampil.mp4',
+            'is_published' => true,
+        ]);
+
+        Video::create([
+            'title' => 'Video Tersembunyi',
+            'video_path' => 'media/videos/tersembunyi.mp4',
+            'is_published' => false,
+        ]);
+
+        $this->get('/')->assertSuccessful()
+            ->assertSee('Video Tampil')
+            ->assertDontSee('Video Tersembunyi');
+    }
+
+    public function test_landing_page_shows_uploaded_branding_images(): void
+    {
+        SiteSetting::query()->update([
+            'hero_image' => 'media/hero/hero.jpg',
+            'logo_path' => 'media/branding/logo.png',
+        ]);
+
+        $this->get('/')->assertSuccessful()
+            ->assertSee('media/hero/hero.jpg', false)
+            ->assertSee('media/branding/logo.png', false);
+    }
+
+    public function test_landing_page_shows_uploaded_service_image(): void
+    {
+        Service::create([
+            'title' => 'Layanan Bergambar',
+            'description' => 'Deskripsi.',
+            'image_path' => 'media/services/ikon.png',
+            'sort_order' => 1,
+        ]);
+
+        $this->get('/')->assertSuccessful()->assertSee('media/services/ikon.png', false);
     }
 
     public function test_landing_page_contains_whatsapp_links(): void

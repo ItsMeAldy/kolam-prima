@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Services\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -19,9 +20,17 @@ class ServiceForm
                             ->label('Judul Layanan')
                             ->required()
                             ->maxLength(255),
+                        FileUpload::make('image_path')
+                            ->label('Gambar Ikon')
+                            ->helperText('Bila diisi, gambar ini menggantikan ikon bawaan. Rasio persegi (1:1) disarankan.')
+                            ->image()
+                            ->disk('public')
+                            ->directory('media/services')
+                            ->visibility('public')
+                            ->maxSize(2048),
                         TextInput::make('icon')
                             ->label('Ikon (nama Heroicon)')
-                            ->helperText('Contoh: pencil-ruler, hammer, droplets')
+                            ->helperText('Dipakai bila gambar ikon di atas kosong. Contoh: pencil-ruler, hammer, droplets')
                             ->maxLength(255),
                         Textarea::make('description')
                             ->label('Deskripsi Singkat')

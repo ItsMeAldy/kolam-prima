@@ -4,11 +4,7 @@
             {{-- Brand --}}
             <div class="lg:col-span-2">
                 <div class="flex items-center gap-2">
-                    <span class="grid h-9 w-9 place-items-center rounded-xl bg-primary-600 text-white">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2 15c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0M2 9c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" />
-                        </svg>
-                    </span>
+                    <x-brand-logo :settings="$settings" />
                     <span class="font-heading text-lg font-bold text-white">{{ $settings->brand_name }}</span>
                 </div>
                 <p class="mt-4 max-w-sm text-sm leading-relaxed">{{ $settings->tagline }}</p>

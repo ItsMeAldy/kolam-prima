@@ -50,27 +50,29 @@ Dilengkapi **panel admin** (Filament) untuk mengelola konten tanpa menyentuh kod
   - Netral: putih + `#F8FAFC`
 - Font: heading **Plus Jakarta Sans**, body **Inter**.
 
-### 2.3 Struktur Halaman (10 bagian)
+### 2.3 Struktur Halaman (11 bagian)
 
 1. Navigasi (sticky)
 2. Hero
 3. Bilah Kepercayaan (4 angka)
 4. Layanan (3 kartu)
-5. Portofolio (grid 9 proyek)
-6. Proses Kerja (6 langkah, hardcode)
-7. Paket Layanan (3 paket)
-8. Ajakan Akhir (tombol WA + form)
-9. Footer
-10. Tombol WhatsApp melayang
+5. Portofolio (grid proyek)
+6. Galeri Video (poster + modal pemutar)
+7. Proses Kerja (6 langkah, hardcode)
+8. Paket Layanan (3 paket)
+9. Ajakan Akhir (tombol WA + form)
+10. Footer
+11. Tombol WhatsApp melayang
 
 Plus: **halaman 404 custom**.
 
 > **Catatan**: bagian **Testimoni** dan **FAQ** dari brief awal **dihapus** dari
 > Fase 1 (keputusan Q16/Q21). Bisa ditambahkan kembali di Fase 2.
 
-### 2.4 Panel Admin (4 resource + 1 pengaturan)
+### 2.4 Panel Admin (5 resource + 1 pengaturan)
 
-- **Proyek Portofolio** (dengan banyak gambar)
+- **Proyek Portofolio** (dengan banyak gambar, upload ke disk `public`)
+- **Galeri Video** (berkas MP4 + poster)
 - **Paket Layanan**
 - **Kartu Layanan**
 - **Pengaturan Situs** (brand, kontak, sosmed, hero, 4 angka kepercayaan)
@@ -86,8 +88,7 @@ Plus: **halaman 404 custom**.
 ### 2.6 Yang Tidak Dikerjakan di Fase 1
 
 Dashboard prospek · penyimpanan lead · analytics · blog/artikel · Testimoni &
-FAQ · halaman legal (privasi/syarat) · upload file (pakai URL) · bilingual ·
-deployment.
+FAQ · halaman legal (privasi/syarat) · bilingual · deployment.
 
 ---
 
@@ -137,7 +138,7 @@ Urutan ini dibuat agar tiap langkah bisa diverifikasi sebelum lanjut.
 - [x] Seeder Pengaturan Situs (brand, kontak, hero, 4 angka kepercayaan).
 - [x] Seeder 3 Kartu Layanan.
 - [x] Seeder 3 Paket Layanan (satu bertanda "paling populer").
-- [x] Seeder 9 Proyek Portofolio + gambar (URL Unsplash).
+- [x] Seeder 9 Proyek Portofolio + gambar (URL Unsplash) — diganti media nyata (lihat Fase 2).
 - [x] Jalankan `php artisan migrate:fresh --seed`, verifikasi data masuk.
 
 ### Fase 5 — Panel Admin (Filament Resources) ✅
@@ -180,6 +181,18 @@ Urutan ini dibuat agar tiap langkah bisa diverifikasi sebelum lanjut.
 - [x] Feature test: halaman utama render 200 + data tampil.
 - [x] Feature test: form menghasilkan URL WA benar.
 - [x] `php artisan test` hijau.
+
+### Fase 9b — Media Nyata & Upload Storage ✅ (2026-10-14)
+- [x] Aktifkan disk `public` + `php artisan storage:link`.
+- [x] Salin 15 foto + 5 video ke `storage/app/public/media/`.
+- [x] Poster video dibuat dari frame video (ffmpeg).
+- [x] Migrasi: `project_images.path` + tabel `videos`.
+- [x] Model `Video` + accessor `ProjectImage::url`, `Project::coverUrl()`.
+- [x] Filament: upload gambar di form Proyek + resource Galeri Video.
+- [x] Upload foto Hero + logo brand (Pengaturan Situs) & gambar ikon kartu Layanan.
+- [x] Section "Galeri Video" (poster + modal Alpine) + anchor nav.
+- [x] Seeder proyek/video nyata; placeholder picsum dihapus.
+- [x] `php artisan test` hijau (27 passed, 103 assertions).
 
 ### Fase 10 — Deployment (ditunda)
 - [ ] Tunggu keputusan user (GitHub + hosting).

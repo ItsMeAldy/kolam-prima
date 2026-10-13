@@ -51,7 +51,7 @@
         {{-- Kolom gambar --}}
         <div class="relative">
             <div class="relative overflow-hidden rounded-3xl shadow-2xl shadow-primary-900/10 ring-1 ring-slate-900/5">
-                <img src="{{ $projects->first()?->images->first()?->image_url ?? 'https://picsum.photos/seed/kolam-hero/1200/900' }}"
+                <img src="{{ $settings->hero_image_url ?? $projects->first()?->coverUrl() ?? 'https://picsum.photos/seed/kolam-hero/1200/900' }}"
                      alt="Kolam renang impian" class="aspect-[4/3] w-full object-cover" loading="eager">
             </div>
             {{-- Kartu mengambang --}}

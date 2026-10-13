@@ -6,6 +6,7 @@ use App\Models\Package;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Video;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -20,6 +21,7 @@ class HomeController extends Controller
             'services' => Service::query()->ordered()->get(),
             'packages' => Package::query()->ordered()->get(),
             'projects' => Project::query()->published()->ordered()->with('images')->get(),
+            'videos' => Video::query()->published()->ordered()->get(),
         ]);
     }
 }

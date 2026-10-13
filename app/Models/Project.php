@@ -47,6 +47,15 @@ class Project extends Model
     }
 
     /**
+     * URL gambar utama proyek. Jatuh ke placeholder bila belum ada gambar.
+     */
+    public function coverUrl(): string
+    {
+        return $this->images->first()?->url
+            ?? 'https://picsum.photos/seed/kolam-'.$this->getKey().'/1200/800';
+    }
+
+    /**
      * Label jenis properti untuk tampilan.
      */
     public function propertyTypeLabel(): string
