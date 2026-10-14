@@ -28,3 +28,11 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# AI agent artifacts (not for public repo)
+/AGENTS.md
+/CLAUDE.md
+/PLAN.md
+/TODO.md
+/DOKUMENTASI.md
+/how-to-demo.md
