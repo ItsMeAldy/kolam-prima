@@ -32,11 +32,23 @@ Terakhir diperbarui: 2026-10-14
   - [x] C10d. Test upload hero/logo/ikon + render; suite hijau (27 passed, 103 assertions) + Pint.
 
 ## D. Ditunda (tunggu instruksi user)
-- [ ] D1. Fase 10 — Deployment.
+- [~] D1. Fase 10 — Deployment → **Oracle Cloud Always Free** (dipilih 14 Okt 2026; Laravel Cloud ditolak karena tak benar-benar gratis).
 - [x] D2. Hubungkan GitHub + push repo → https://github.com/ItsMeAldy/kolam-prima (public, branch `main`).
 - [ ] D3. Isi judul/lokasi proyek & judul video yang benar (sekarang placeholder) lewat panel admin.
 - [ ] D4. Opsional: Umami analytics, konten asli (nomor WA, alamat).
 - [ ] D5. Fase 2/3 lanjutan: blog, testimoni, FAQ, halaman layanan terpisah.
+
+## F. Deploy Oracle Cloud Always Free (Fase 10)
+- [x] F1. Pilih platform: Oracle Cloud Always Free (VM ARM 2 OCPU/12GB, Ubuntu 24.04, nginx + PHP-FPM + MySQL).
+- [x] F2. Generate SSH key `~/.ssh/kolam_prima_oracle` (ed25519).
+- [x] F3. Tulis skrip deploy di `deploy/` (`setup-server.sh`, `deploy.sh`, `push-media.sh`, nginx, supervisor, README).
+- [ ] F4. Buat VM di Oracle Console (region Singapore; buka port 80/443 di Security List + iptables VM). **[BUTUH USER]**
+- [ ] F5. `sudo bash deploy/setup-server.sh` di server (install + .env + migrate).
+- [ ] F6. `bash deploy/push-media.sh <IP>` dari lokal (29MB foto/video).
+- [ ] F7. `sudo bash deploy/deploy.sh --seed` di server (migrate + seed; media harus sudah terkirim).
+- [ ] F8. Verifikasi: landing page, panel admin `/admin`, galeri video, upload.
+- [ ] F9. Ganti password admin `password` → kuat, lewat panel admin.
+- [ ] F10. (Opsional) Domain kustom + certbot SSL; pertimbangkan upgrade PAYG agar VM tidak di-reclaim.
 
 ## E. Verifikasi manual (dilakukan user)
 - [x] E1. Jalankan MySQL + `artisan serve`, cek landing page + panel admin di browser.
