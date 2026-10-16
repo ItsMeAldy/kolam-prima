@@ -24,7 +24,7 @@
     {{-- Structured data: LocalBusiness --}}
     <script type="application/ld+json">
     {!! json_encode([
-        '@context' => 'https://schema.org',
+        '@@context' => 'https://schema.org',
         '@type' => 'LocalBusiness',
         'name' => $settings->brand_name,
         'description' => $settings->tagline,
@@ -40,6 +40,8 @@
         'priceRange' => '$$',
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
     </script>
+
+    @yield('schema')
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])

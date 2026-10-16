@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Package;
 use App\Models\Project;
 use App\Models\Service;
@@ -22,6 +23,7 @@ class HomeController extends Controller
             'packages' => Package::query()->ordered()->get(),
             'projects' => Project::query()->published()->ordered()->with('images')->get(),
             'videos' => Video::query()->published()->ordered()->get(),
+            'faqs' => Faq::query()->published()->ordered()->get(),
         ]);
     }
 }

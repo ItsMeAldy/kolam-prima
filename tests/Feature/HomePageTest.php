@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Faq;
 use App\Models\Package;
 use App\Models\Project;
 use App\Models\Service;
@@ -116,6 +117,82 @@ class HomePageTest extends TestCase
         ]);
 
         $this->get('/')->assertSuccessful()->assertSee('media/services/ikon.png', false);
+    }
+
+    public function test_landing_page_shows_published_faqs_only(): void
+    {
+        Faq::create([
+            'question' => 'Pertanyaan Tampil?',
+            'answer' => 'Jawaban tampil.',
+            'is_published' => true,
+        ]);
+
+        Faq::create([
+            'question' => 'Pertanyaan Tersembunyi?',
+            'answer' => 'Jawaban tersembunyi.',
+            'is_published' => false,
+        ]);
+
+        $this->get('/')->assertSuccessful()
+            ->assertSee('Pertanyaan Tampil?')
+            ->assertSee('Jawaban tampil.')
+            ->assertDontSee('Pertanyaan Tersembunyi?');
+    }
+
+    public function test_landing_page_renders_faqpage_schema(): void
+    {
+        Faq::create([
+            'question' => 'Berapa lama pengerjaan?',
+            'answer' => 'Sekitar tiga minggu.',
+            'sort_order' => 1,
+        ]);
+
+        $this->get('/')->assertSuccessful()
+            ->assertSee('"@context": "https://schema.org"', false)
+            ->assertSee('"@type": "FAQPage"', false)
+            ->assertSee('"@type": "Question"', false)
+            ->assertSee('Berapa lama pengerjaan?');
+    }
+
+    public function test_json_ld_schemas_are_valid_and_free_of_blade_leaks(): void
+    {
+        Faq::create([
+            'question' => 'Berapa lama pengerjaan?',
+            'answer' => 'Sekitar tiga minggu.',
+            'sort_order' => 1,
+        ]);
+
+        $response = $this->get('/')->assertSuccessful();
+
+        $response->assertSee('"@context": "https://schema.org"', false)
+            ->assertDontSee('$__contextArgs', false);
+
+        preg_match_all(
+            '#<script type="application/ld\+json">(.*?)</script>#s',
+            $response->getContent(),
+            $matches,
+        );
+
+        $this->assertNotEmpty($matches[1], 'Tidak ada blok JSON-LD yang ditemukan.');
+
+        foreach ($matches[1] as $json) {
+            $decoded = json_decode(trim($json), true);
+
+            $this->assertIsArray($decoded, 'Blok JSON-LD tidak dapat di-decode.');
+            $this->assertSame('https://schema.org', $decoded['@context'] ?? null);
+        }
+    }
+
+    public function test_landing_page_omits_faqpage_schema_when_no_faq_published(): void
+    {
+        Faq::create([
+            'question' => 'Pertanyaan Draf?',
+            'answer' => 'Belum tayang.',
+            'is_published' => false,
+        ]);
+
+        $this->get('/')->assertSuccessful()
+            ->assertDontSee('FAQPage', false);
     }
 
     public function test_landing_page_contains_whatsapp_links(): void

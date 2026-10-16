@@ -19,6 +19,7 @@
                 ['#video', 'Video'],
                 ['#proses', 'Proses Kerja'],
                 ['#paket', 'Paket'],
+                ['#faq', 'FAQ'],
                 ['#kontak', 'Kontak'],
             ] as [$href, $label])
                 <a href="{{ $href }}" class="text-sm font-medium text-navy-800/80 transition hover:text-primary-600">{{ $label }}</a>
@@ -52,6 +53,7 @@
                 ['#video', 'Video'],
                 ['#proses', 'Proses Kerja'],
                 ['#paket', 'Paket'],
+                ['#faq', 'FAQ'],
                 ['#kontak', 'Kontak'],
             ] as [$href, $label])
                 <a href="{{ $href }}" @click="open = false" class="block rounded-lg px-3 py-2 text-sm font-medium text-navy-800 hover:bg-slate-50">{{ $label }}</a>

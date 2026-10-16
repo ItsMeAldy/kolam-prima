@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Filament\Pages\ManageSiteSettings;
+use App\Filament\Resources\Faqs\Pages\CreateFaq;
+use App\Filament\Resources\Faqs\Pages\EditFaq;
 use App\Filament\Resources\Packages\Pages\CreatePackage;
 use App\Filament\Resources\Packages\Pages\EditPackage;
 use App\Filament\Resources\Projects\Pages\CreateProject;
@@ -11,6 +13,7 @@ use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Services\Pages\EditService;
 use App\Filament\Resources\Videos\Pages\CreateVideo;
 use App\Filament\Resources\Videos\Pages\EditVideo;
+use App\Models\Faq;
 use App\Models\Package;
 use App\Models\Project;
 use App\Models\Service;
@@ -136,6 +139,30 @@ class AdminCrudTest extends TestCase
             ])
             ->call('create')
             ->assertHasFormErrors(['slug']);
+    }
+
+    public function test_admin_can_create_and_edit_faq(): void
+    {
+        Livewire::actingAs($this->admin)
+            ->test(CreateFaq::class)
+            ->fillForm([
+                'question' => 'Pertanyaan Baru?',
+                'answer' => 'Jawaban baru.',
+                'sort_order' => 1,
+                'is_published' => true,
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $faq = Faq::query()->where('question', 'Pertanyaan Baru?')->firstOrFail();
+
+        Livewire::actingAs($this->admin)
+            ->test(EditFaq::class, ['record' => $faq->getKey()])
+            ->fillForm(['question' => 'Pertanyaan Diubah?'])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('faqs', ['question' => 'Pertanyaan Diubah?']);
     }
 
     public function test_admin_can_create_and_edit_video(): void

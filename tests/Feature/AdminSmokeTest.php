@@ -20,6 +20,7 @@ class AdminSmokeTest extends TestCase
             '/admin/packages',
             '/admin/services',
             '/admin/videos',
+            '/admin/faqs',
             '/admin/manage-site-settings',
         ] as $path) {
             $this->actingAs($user)->get($path)->assertSuccessful();
