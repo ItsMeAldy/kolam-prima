@@ -1,0 +1,5 @@
+# graphify: exclude compiled third-party assets so the graph reflects project
+# source instead of minified vendor bundles (5,238 of 5,804 nodes were noise).
+public/js/filament/
+public/css/filament/
+public/build/
